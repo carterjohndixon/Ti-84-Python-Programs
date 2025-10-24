@@ -59,7 +59,6 @@ def rationalize(expr):
     if result is None:
         return "Error"
     
-    # Common patterns (positive)
     if abs(result - 4*math.sqrt(3)/3) < 1e-10:
         return "4*sqrt(3)/3"
     if abs(result - math.sqrt(2)/2) < 1e-10:
@@ -75,7 +74,6 @@ def rationalize(expr):
     if abs(result - 2*math.sqrt(3)) < 1e-10:
         return "2*sqrt(3)"
     
-    # Common patterns (negative)
     if abs(result + 4*math.sqrt(3)/3) < 1e-10:
         return "-4*sqrt(3)/3"
     if abs(result + math.sqrt(2)/2) < 1e-10:
@@ -91,13 +89,11 @@ def rationalize(expr):
     if abs(result + 2*math.sqrt(3)) < 1e-10:
         return "-2*sqrt(3)"
     
-    # Handle sqrt(2)/4 and -sqrt(2)/4
     if abs(result - math.sqrt(2)/4) < 1e-10:
         return "sqrt(2)/4"
     if abs(result + math.sqrt(2)/4) < 1e-10:
         return "-sqrt(2)/4"
     
-    # Handle sqrt(3)/4 and -sqrt(3)/4
     if abs(result - math.sqrt(3)/4) < 1e-10:
         return "sqrt(3)/4"
     if abs(result + math.sqrt(3)/4) < 1e-10:
@@ -112,15 +108,12 @@ def simplify(expr):
     if result is None:
         return "Error"
     
-    # Handle fractions with radicals
     if '/' in expr and 'sqrt(' in expr:
         return rationalize(expr)
     
-    # Handle simple radicals
     if 'sqrt(' in expr:
-        # Simple extraction without regex
         start = expr.find('sqrt(') + 5
-        if start > 4:  # Found sqrt(
+        if start > 4:
             paren_count = 0
             end = start
             for i in range(start, len(expr)):
@@ -148,10 +141,6 @@ def simplify(expr):
                         return "sqrt(" + str(radicand) + ")"
     
     return "{:.6f}".format(result)
-
-# Single use mode
-print("Radical Simplifier")
-print("Enter your expression:")
 
 try:
     expr = input("Expr: ").strip()
